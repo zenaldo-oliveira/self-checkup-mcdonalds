@@ -9,7 +9,7 @@ datasource db {
 
 model Restaurant {
   id             String         @id @default(cuid()) // ID único do restaurante
-  nome           String // Nome do restaurante
+  name           String // Nome do restaurante
   slug           String // URL amigável (slug)
   description    String // Descrição do restaurante
   avatarImageUrl String // URL da imagem avatar
@@ -25,14 +25,14 @@ model Restaurant {
 
 model MenuCategory {
   id           String     @id @default(cuid()) // ID único da categoria
-  nome         String // Nome da categoria
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id]) // FK para restaurante
+  name         String // Nome da categoria
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade) // FK para restaurante
   restaurantId String // Campo FK restaurante
   products     Product[] // Relação 1:N com Product
   createdAt    DateTime   @default(now()) // Data criação (padronizado)
   updatedAt    DateTime   @updatedAt // Data atualização (padronizado)
 
-  @@index([nome]) // Índice para buscas por nome
+  @@index([name]) // Índice para buscas por nome
 }
 
 model Product {
@@ -43,9 +43,9 @@ model Product {
   imageUrl       String // URL da imagem
   ingredients    Json // Ingredientes em JSON
   orderProduct   OrderProduct[] // Relação 1:N com OrderProduct
-  restaurant     Restaurant     @relation(fields: [restaurantId], references: [id]) // FK para restaurante
+  restaurant     Restaurant     @relation(fields: [restaurantId], references: [id], onDelete: Cascade) // FK para restaurante
   restaurantId   String // Campo FK restaurante
-  menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id]) // FK categoria
+  menuCategory   MenuCategory   @relation(fields: [menuCategoryId], references: [id], onDelete: Cascade) // FK categoria
   menuCategoryId String // Campo FK categoria
   createdAt      DateTime       @default(now()) // Data criação
   updatedAt      DateTime       @updatedAt // Data atualização
@@ -56,7 +56,7 @@ model Order {
   total             Float // Valor total do pedido
   status            OrderStatus // Status enum
   consumptionMethod ConsumptionMethod // Método de consumo enum
-  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id]) // FK restaurante
+  restaurant        Restaurant        @relation(fields: [restaurantId], references: [id], onDelete: Cascade) // FK restaurante
   restaurantId      String // Campo FK restaurante
   createdAt         DateTime          @default(now()) // Data criação
   updatedAt         DateTime          @updatedAt // Data atualização
@@ -65,9 +65,9 @@ model Order {
 
 model OrderProduct {
   id        String   @id @default(cuid()) // ID do item pedido
-  product   Product  @relation(fields: [productId], references: [id]) // FK para produto
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade) // FK para produto
   productId String // Campo FK produto
-  order     Order    @relation(fields: [orderId], references: [id]) // FK para pedido
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade) // FK para pedido
   orderId   Int // Campo FK pedido
   quantity  Int // Quantidade do produto no pedido
   price     Float // Preço unitário (considera desconto, promoções etc)

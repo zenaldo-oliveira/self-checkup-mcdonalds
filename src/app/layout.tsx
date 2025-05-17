@@ -1,16 +1,16 @@
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Poppins } from 'next/font/google';
 
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import './globals.css';
 
 const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  subsets: ["latin"],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "FSW Donalds",
-  description: "BOra terminar esse projeto lindao",
+  title: 'FSW Donalds',
+  description: 'BOra terminar esse projeto lindao',
 };
 
 export default function RootLayout({

@@ -1,68 +1,26 @@
-import js from '@eslint/js';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
-import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
-import reactPlugin from 'eslint-plugin-react';
-import prettierPlugin from 'eslint-plugin-prettier';
+import { FlatCompat } from '@eslint/eslintrc';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const reactGlobals = {
-  React: 'readonly',
-  JSX: 'readonly',
-};
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-export default [
-  js.configs.recommended,
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
 
+const eslintConfig = [
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        project: './tsconfig.json',
-        tsconfigRootDir: process.cwd(),
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-      globals: reactGlobals,
-    },
     plugins: {
-      react: reactPlugin,
-      '@typescript-eslint': typescriptPlugin,
-      'simple-import-sort': simpleImportSortPlugin,
-      prettier: prettierPlugin,
+      'simple-import-sort': simpleImportSort,
     },
     rules: {
-      'no-undef': 'off',
-
-      // Ordenação de imports
-      'simple-import-sort/imports': [
-        'error',
-        {
-          groups: [
-            ['^\\w', '^@\\w'], // Pacotes externos e @externos
-            ['^@/'], // Alias internos
-            ['^\\.'], // Relativos
-          ],
-        },
-      ],
+      'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-
-      // Estilo de código
-      quotes: ['error', 'single'],
-      semi: ['error', 'always'],
-
-      // React
-      'react/react-in-jsx-scope': 'off',
-
-      // Prettier integrado no ESLint
-      'prettier/prettier': 'error',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
     },
   },
 ];
+
+export default eslintConfig;

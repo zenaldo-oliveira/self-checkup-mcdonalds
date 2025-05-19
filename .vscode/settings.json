@@ -8,10 +8,9 @@
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "vue"
+    "typescriptreact"
   ],
   "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit"
+    "source.fixAll.eslint": "explicit"
   }
 }

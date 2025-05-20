@@ -8,20 +8,19 @@ datasource db {
 }
 
 model Restaurant {
-  id             String         @id @default(cuid()) // ID único do restaurante
-  name           String // Nome do restaurante
-  slug           String // URL amigável (slug)
-  description    String // Descrição do restaurante
-  avatarImageUrl String // URL da imagem avatar
-  coverImageUrl  String // URL da imagem de capa
-  menuCategory   MenuCategory[] // Relação 1:N com MenuCategory
-  products       Product[] // Relação 1:N com Product
-  orders         Order[] // Relação 1:N com Order
-  createdAt      DateTime       @default(now()) // Data criação (padronizado)
-  updatedAt      DateTime       @updatedAt // Data atualização (padronizado)
-
-  @@index([slug]) // Índice para buscas rápidas pelo slug
+  id             String         @id @default(cuid())
+  name           String
+  slug           String @unique
+  description    String
+  avatarImageUrl String
+  coverImageUrl  String
+  menuCategory   MenuCategory[]
+  products       Product[]
+  orders         Order[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
+
 
 model MenuCategory {
   id           String     @id @default(cuid()) // ID único da categoria

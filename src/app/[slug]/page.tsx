@@ -42,11 +42,15 @@ const RestaurantPage = async ({ params }: RestaurantPageProps) => {
       {/* Opções */}
       <div className="grid grid-cols-2 gap-4 pt-14">
         <ConsumptionMethodOption
+          option="DINE_IN"
+          slug={slug}
           buttonText="Para comer aqui"
           imageAlt="Comer aqui"
           imageUrl="/dine_in.png"
         />
         <ConsumptionMethodOption
+          option="TAKEAWAY"
+          slug={slug}
           buttonText="Para levar"
           imageAlt="Para levar"
           imageUrl="/takeaway.png"
